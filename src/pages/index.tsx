@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useState } from "react";
+import Image from "next/image";
 
 // ⬇️ Mets ici ton vrai endpoint Formspree
 const FORM_ENDPOINT = "https://formspree.io/f/xblzdjpl"; // <-- remplace par le tien
@@ -48,15 +49,9 @@ const Home: NextPage = () => {
         >
           <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="#0ea5e9"
-                width="22"
-                height="22"
-              >
-                <path d="M2.5 19.5l19-7.5-19-7.5v5l10 2.5-10 2.5v5z" />
-              </svg>
+              <img src="/logo.jpg" alt="Logo Flynino" width={22} height={22} />
+
+
               <span style={{ fontSize: 22, fontWeight: 900, letterSpacing: 0.5 }}>FLYNINO</span>
               <span
                 style={{
@@ -181,4 +176,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
