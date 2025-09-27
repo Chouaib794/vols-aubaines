@@ -36,11 +36,12 @@ export default function Home() {
         <div style={{ maxWidth: 960, margin: "0 auto", padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <img src="/logo.jpg" alt="Logo Flynino" width={60} height={60} style={{ borderRadius: 8 }} />
+              <img src="/logo.jpg" alt="Logo Flynino" width={80} height={80} style={{ borderRadius: 8 }} />
 
               <span style={{ fontSize: 22, fontWeight: 900, letterSpacing: 0.5 }}>FLYNINO</span>
               <span style={{ fontSize: 12, color: "#64748b", textTransform: "uppercase" }}>fly cheap, flynino</span>
             </div>
+            
           </div>
           <nav style={{ fontSize: 14, color: "#334155" }}>
             <a href="#subscribe" style={{ textDecoration: "none", color: "#334155" }}>S’abonner</a>
