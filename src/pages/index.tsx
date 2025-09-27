@@ -38,8 +38,22 @@ const Home: NextPage = () => {
       <header style={{ borderBottom: "1px solid #e5e7eb", background: "#fff" }}>
         <div style={{ maxWidth: 960, margin: "0 auto", padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-            <span style={{ fontSize: 22, fontWeight: 900, letterSpacing: 0.5 }}>FLYNINO</span>
-            <span style={{ fontSize: 12, color: "#64748b", textTransform: "uppercase" }}>fly cheap, flynino</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="#0ea5e9"
+    width="22"
+    height="22"
+  >
+    <path d="M2.5 19.5l19-7.5-19-7.5v5l10 2.5-10 2.5v5z" />
+  </svg>
+  <span style={{ fontSize: 22, fontWeight: 900, letterSpacing: 0.5 }}>FLYNINO</span>
+  <span style={{ fontSize: 12, color: "#64748b", textTransform: "uppercase" }}>
+    fly cheap, flynino
+  </span>
+</div>
+, flynino</span>
           </div>
           <nav style={{ fontSize: 14, color: "#334155" }}>
             <a href="#subscribe" style={{ textDecoration: "none", color: "#334155" }}>S’abonner</a>
