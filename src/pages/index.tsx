@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
+/* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
+import Link from "next/link";
 
 const FORM_ENDPOINT = "https://formspree.io/f/xblzdjpl"; // ton endpoint Formspree
 
@@ -34,36 +36,41 @@ export default function Home() {
   return (
     <main style={{ fontFamily: "system-ui, -apple-system", background: "#f8fafc", minHeight: "100vh" }}>
       {/* HEADER */}
-<header style={{ borderBottom: "1px solid #e5e7eb", background: "#fff" }}>
-  <div
-    style={{
-      maxWidth: 960,
-      margin: "0 auto",
-      padding: "16px 20px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-    }}
-  >
-    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-      {/* Logo agrandi */}
-      <img src="/logo.jpg" alt="Logo Flynino" width={70} height={70} style={{ borderRadius: 8 }} />
-      {/* Texte aligné verticalement */}
-      <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-        <span style={{ fontSize: 28, fontWeight: 900, letterSpacing: 0.5 }}>FLYNINO</span>
-        <span style={{ fontSize: 13, color: "#64748b", textTransform: "uppercase" }}>
-          fly cheap, flynino
-        </span>
-      </div>
-    </div>
+      <header style={{ borderBottom: "1px solid #e5e7eb", background: "#fff" }}>
+        <div
+          style={{
+            maxWidth: 960,
+            margin: "0 auto",
+            padding: "16px 20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            {/* Logo */}
+            <img src="/logo.jpg" alt="Logo Flynino" width={70} height={70} style={{ borderRadius: 8 }} />
 
-    {/* ✅ Un seul menu de navigation */}
-    <nav style={{ fontSize: 14, color: "#334155", display: "flex", gap: 16 }}>
-      <a href="/deals" style={{ textDecoration: "none", color: "#334155" }}>Aubaines</a>
-      <a href="#subscribe" style={{ textDecoration: "none", color: "#334155" }}>S’abonner</a>
-    </nav>
-  </div>
-</header>
+            {/* Texte */}
+            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+              <span style={{ fontSize: 28, fontWeight: 900, letterSpacing: 0.5 }}>FLYNINO</span>
+              <span style={{ fontSize: 13, color: "#64748b", textTransform: "uppercase" }}>
+                fly cheap, flynino
+              </span>
+            </div>
+          </div>
+
+          {/* NAVIGATION */}
+          <nav style={{ fontSize: 14, color: "#334155", display: "flex", gap: 16 }}>
+            <Link href="/deals" style={{ textDecoration: "none", color: "#334155" }}>
+              Aubaines
+            </Link>
+            <a href="#subscribe" style={{ textDecoration: "none", color: "#334155" }}>
+              S’abonner
+            </a>
+          </nav>
+        </div>
+      </header>
 
       {/* HERO */}
       <section style={{ maxWidth: 960, margin: "0 auto", padding: "32px 20px 8px" }}>
@@ -71,99 +78,10 @@ export default function Home() {
           Trouve des <span style={{ color: "#0ea5e9", fontWeight: 800 }}>aubaines de vols</span> sans effort
         </h1>
         <p style={{ color: "#475569", marginTop: 10 }}>
-          &quot;fly cheap, flynino&quot; — Alertes intelligentes pour les meilleures offres (Europe & Soleil).
+          &quot;fly cheap, flynino&quot; — Alertes intelligentes pour les meilleures offres (Europe &amp; Soleil).
         </p>
-      </section>
 
-      {/* FORM */}
-      <section id="subscribe" style={{ maxWidth: 960, margin: "12px auto 40px", padding: "0 20px" }}>
-        <div
+        <Link
+          href="/deals"
           style={{
-            background: "#fff",
-            border: "1px solid #e5e7eb",
-            borderRadius: 12,
-            padding: 16,
-            boxShadow: "0 6px 18px rgba(2,6,23,0.04)",
-          }}
-        >
-          <form onSubmit={onSubmit}>
-            <label style={{ display: "block", fontWeight: 700, marginBottom: 8 }}>
-              S’abonner aux alertes de prix
-            </label>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 8 }}>
-              <input
-                name="email"
-                type="email"
-                required
-                placeholder="votre@email.com"
-                style={{
-                  border: "1px solid #d1d5db",
-                  borderRadius: 8,
-                  padding: "10px 12px",
-                  background: "#fff",
-                }}
-              />
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-                <input
-                  name="origin"
-                  placeholder="Origine (ex. YUL)"
-                  style={{
-                    border: "1px solid #d1d5db",
-                    borderRadius: 8,
-                    padding: "10px 12px",
-                    background: "#fff",
-                  }}
-                />
-                <input
-                  name="dest"
-                  placeholder="Destination (ex. CDG)"
-                  style={{
-                    border: "1px solid #d1d5db",
-                    borderRadius: 8,
-                    padding: "10px 12px",
-                    background: "#fff",
-                  }}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                style={{
-                  background: "#0f172a",
-                  color: "white",
-                  border: "1px solid #0f172a",
-                  borderRadius: 8,
-                  padding: "10px 14px",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  opacity: status === "sending" ? 0.7 : 1,
-                }}
-              >
-                {status === "sending" ? "Envoi..." : "S’abonner"}
-              </button>
-              {status !== "idle" && (
-                <small style={{ color: status === "ok" ? "#065f46" : "#7f1d1d" }}>{message}</small>
-              )}
-            </div>
-          </form>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer style={{ borderTop: "1px solid #e5e7eb", background: "#fff" }}>
-        <div
-          style={{
-            maxWidth: 960,
-            margin: "0 auto",
-            padding: "14px 20px",
-            fontSize: 12,
-            color: "#64748b",
-          }}
-        >
-          © {new Date().getFullYear()} Flynino — fly cheap, flynino
-        </div>
-      </footer>
-    </main>
-  );
-}
-
+            display: "inline-block",
