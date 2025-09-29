@@ -1,23 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable react/no-unescaped-entities */
 import React, { useMemo, useState } from "react";
 
-type Deal = {
-  id: string;
-  city: string;
-  iata: string;
-  month: number; // 1..12
-  price: number; // CAD
-  link: string;  // (affilié plus tard)
-};
-
+type Deal = { id:string; city:string; iata:string; month:number; price:number; link:string; };
 const MOCK: Deal[] = [
-  { id: "1", city: "Lisbonne",   iata: "LIS", month: 11, price: 553, link: "#" },
-  { id: "2", city: "Las Vegas",  iata: "LAS", month:  1, price: 281, link: "#" },
-  { id: "3", city: "Paris",      iata: "CDG", month:  3, price: 499, link: "#" },
-  { id: "4", city: "Casablanca", iata: "CMN", month:  2, price: 620, link: "#" },
+  { id:"1", city:"Lisbonne",   iata:"LIS", month:11, price:553, link:"#"},
+  { id:"2", city:"Las Vegas",  iata:"LAS", month: 1, price:281, link:"#"},
+  { id:"3", city:"Paris",      iata:"CDG", month: 3, price:499, link:"#"},
+  { id:"4", city:"Casablanca", iata:"CMN", month: 2, price:620, link:"#"},
 ];
-
 const months = ["Jan","Fév","Mar","Avr","Mai","Juin","Juil","Août","Sept","Oct","Nov","Déc"];
 
 export default function DealsPage() {
@@ -25,71 +15,75 @@ export default function DealsPage() {
   const [maxPrice, setMaxPrice] = useState(1100);
   const [activeMonth, setActiveMonth] = useState<number | null>(null);
 
-  const data = useMemo(() => {
-    return MOCK.filter(d =>
-      d.price >= minPrice &&
-      d.price <= maxPrice &&
-      (activeMonth ? d.month === activeMonth : true)
-    );
-  }, [minPrice, maxPrice, activeMonth]);
+  const data = useMemo(
+    () => MOCK.filter(d => d.price >= minPrice && d.price <= maxPrice && (activeMonth ? d.month === activeMonth : true)),
+    [minPrice, maxPrice, activeMonth]
+  );
 
   return (
-    <main style={{ fontFamily: "system-ui,-apple-system", maxWidth: 1000, margin: "32px auto", padding: "0 16px" }}>
-      <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 12 }}>Aubaines au départ de Montréal (mock)</h1>
+    <main className="deals">
+      <div className="container">
+        <h1 className="title">Aubaines au départ de Montréal</h1>
 
-      {/* Filtres */}
-      <section style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr", marginBottom: 16 }}>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-          {months.map((m, i) => {
-            const monthNum = i + 1;
-            const active = activeMonth === monthNum;
-            return (
-              <button
-                key={m}
-                onClick={() => setActiveMonth(active ? null : monthNum)}
-                style={{
-                  padding: "6px 10px",
-                  border: "1px solid #e5e7eb",
-                  borderRadius: 8,
-                  cursor: "pointer",
-                  background: active ? "#0ea5e9" : "#fff",
-                  color: active ? "#fff" : "#111827"
-                }}
-              >
-                {m}
-              </button>
-            );
-          })}
-        </div>
-
-        <div>
-          <label style={{ display: "block", fontWeight: 600, marginBottom: 6 }}>
-            Prix : {minPrice}$ – {maxPrice}$
-          </label>
-          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-            <input type="range" min={100} max={1500} value={minPrice} onChange={e=>setMinPrice(Number(e.target.value))} />
-            <input type="range" min={100} max={1500} value={maxPrice} onChange={e=>setMaxPrice(Number(e.target.value))} />
+        {/* Filtres */}
+        <section className="filters">
+          <div className="months">
+            {months.map((m, i) => {
+              const num = i + 1, active = activeMonth === num;
+              return (
+                <button key={m} onClick={() => setActiveMonth(active ? null : num)}
+                  className={`chip ${active ? "chip--on" : ""}`}>{m}</button>
+              );
+            })}
           </div>
-        </div>
-      </section>
 
-      {/* Liste */}
-      <section style={{ display: "grid", gap: 12, gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
-        {data.map(d => (
-          <a key={d.id} href={d.link} style={{ border:"1px solid #e5e7eb", borderRadius: 12, padding: 12, textDecoration:"none", color:"#111827" }}>
-            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-              <strong style={{ fontSize: 18 }}>{d.city}</strong>
-              <div style={{ fontSize: 12, border:"1px solid #e5e7eb", borderRadius: 999, padding:"2px 8px" }}>
-                {months[d.month-1]}
-              </div>
+          <div>
+            <label className="label">Prix : {minPrice}$ – {maxPrice}$</label>
+            <div className="ranges">
+              <input type="range" min={100} max={1500} value={minPrice} onChange={e=>setMinPrice(Number(e.target.value))}/>
+              <input type="range" min={100} max={1500} value={maxPrice} onChange={e=>setMaxPrice(Number(e.target.value))}/>
             </div>
-            <div style={{ color:"#6b7280", fontSize: 13, marginTop: 4 }}>YUL → {d.iata}</div>
-            <div style={{ fontWeight: 800, fontSize: 24, marginTop: 8 }}>{Math.round(d.price)} $</div>
-            <div style={{ marginTop: 8, fontSize: 14, color:"#0ea5e9" }}>Voir le deal →</div>
-          </a>
-        ))}
-        {data.length === 0 && <div style={{ color:"#6b7280" }}>Aucune aubaine pour ces filtres.</div>}
-      </section>
+          </div>
+        </section>
+
+        {/* Liste */}
+        <section className="grid">
+          {data.map(d => (
+            <a key={d.id} href={d.link} className="card">
+              <div className="card__head">
+                <strong className="card__city">{d.city}</strong>
+                <span className="pill">{months[d.month-1]}</span>
+              </div>
+              <div className="muted">YUL → {d.iata}</div>
+              <div className="card__price">{Math.round(d.price)} $</div>
+              <div className="card__cta">Voir le deal →</div>
+            </a>
+          ))}
+          {data.length === 0 && <div className="muted">Aucune aubaine pour ces filtres.</div>}
+        </section>
+      </div>
+
+      <style jsx>{`
+        :root{ --ink:#0f172a; --muted:#64748b; --bdr:#e5e7eb; --accent:#0ea5e9; }
+        .deals{ font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
+        .title{ font-size:32px; font-weight:800; margin:28px 0 10px }
+        .filters{ display:grid; gap:12px; margin:6px 0 18px }
+        .months{ display:flex; flex-wrap:wrap; gap:8px }
+        .chip{ padding:6px 10px; border:1px solid var(--bdr); border-radius:999px; background:#fff; cursor:pointer }
+        .chip--on{ background:var(--accent); color:#fff; border-color:var(--accent) }
+        .label{ display:block; font-weight:600; margin-bottom:6px }
+        .ranges{ display:flex; gap:12px; align-items:center }
+        .grid{ display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); padding-bottom:28px }
+        .card{ border:1px solid var(--bdr); border-radius:14px; padding:14px; text-decoration:none; color:var(--ink);
+               background:#fff; box-shadow:0 8px 30px rgba(2,6,23,.05); transition:transform .12s ease, box-shadow .12s ease }
+        .card:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(2,6,23,.08) }
+        .card__head{ display:flex; justify-content:space-between; align-items:center }
+        .card__city{ font-size:18px }
+        .pill{ font-size:12px; border:1px solid var(--bdr); border-radius:999px; padding:2px 8px; color:#111827 }
+        .muted{ color:var(--muted); font-size:13px; margin-top:4px }
+        .card__price{ font-weight:800; font-size:24px; margin-top:8px }
+        .card__cta{ margin-top:8px; font-size:14px; color:var(--accent) }
+      `}</style>
     </main>
   );
 }
