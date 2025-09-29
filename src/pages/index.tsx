@@ -85,3 +85,107 @@ export default function Home() {
           href="/deals"
           style={{
             display: "inline-block",
+            marginTop: 12,
+            padding: "10px 14px",
+            borderRadius: 8,
+            background: "#0ea5e9",
+            color: "white",
+            textDecoration: "none",
+            fontWeight: 700,
+          }}
+        >
+          Voir les aubaines →
+        </Link>
+      </section>
+
+      {/* FORM */}
+      <section id="subscribe" style={{ maxWidth: 960, margin: "12px auto 40px", padding: "0 20px" }}>
+        <div
+          style={{
+            background: "#fff",
+            border: "1px solid #e5e7eb",
+            borderRadius: 12,
+            padding: 16,
+            boxShadow: "0 6px 18px rgba(2,6,23,0.04)",
+          }}
+        >
+          <form onSubmit={onSubmit}>
+            <label style={{ display: "block", fontWeight: 700, marginBottom: 8 }}>
+              S’abonner aux alertes de prix
+            </label>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 8 }}>
+              <input
+                name="email"
+                type="email"
+                required
+                placeholder="votre@email.com"
+                style={{
+                  border: "1px solid #d1d5db",
+                  borderRadius: 8,
+                  padding: "10px 12px",
+                  background: "#fff",
+                }}
+              />
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                <input
+                  name="origin"
+                  placeholder="Origine (ex. YUL)"
+                  style={{
+                    border: "1px solid #d1d5db",
+                    borderRadius: 8,
+                    padding: "10px 12px",
+                    background: "#fff",
+                  }}
+                />
+                <input
+                  name="dest"
+                  placeholder="Destination (ex. CDG)"
+                  style={{
+                    border: "1px solid #d1d5db",
+                    borderRadius: 8,
+                    padding: "10px 12px",
+                    background: "#fff",
+                  }}
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                style={{
+                  background: "#0f172a",
+                  color: "white",
+                  border: "1px solid #0f172a",
+                  borderRadius: 8,
+                  padding: "10px 14px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  opacity: status === "sending" ? 0.7 : 1,
+                }}
+              >
+                {status === "sending" ? "Envoi..." : "S’abonner"}
+              </button>
+              {status !== "idle" && (
+                <small style={{ color: status === "ok" ? "#065f46" : "#7f1d1d" }}>{message}</small>
+              )}
+            </div>
+          </form>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer style={{ borderTop: "1px solid #e5e7eb", background: "#fff" }}>
+        <div
+          style={{
+            maxWidth: 960,
+            margin: "0 auto",
+            padding: "14px 20px",
+            fontSize: 12,
+            color: "#64748b",
+          }}
+        >
+          © {new Date().getFullYear()} Flynino — fly cheap, flynino
+        </div>
+      </footer>
+    </main>
+  );
+}
