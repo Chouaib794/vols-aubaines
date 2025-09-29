@@ -34,41 +34,36 @@ export default function Home() {
   return (
     <main style={{ fontFamily: "system-ui, -apple-system", background: "#f8fafc", minHeight: "100vh" }}>
       {/* HEADER */}
-      <header style={{ borderBottom: "1px solid #e5e7eb", background: "#fff" }}>
-        <div
-          style={{
-            maxWidth: 960,
-            margin: "0 auto",
-            padding: "16px 20px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            {/* Logo agrandi */}
-            <img src="/logo.jpg" alt="Logo Flynino" width={70} height={70} style={{ borderRadius: 8 }} />
-            {/* Texte aligné verticalement */}
-            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-              <span style={{ fontSize: 28, fontWeight: 900, letterSpacing: 0.5 }}>FLYNINO</span>
-              <span
-                style={{
-                  fontSize: 13,
-                  color: "#64748b",
-                  textTransform: "uppercase",
-                }}
-              >
-                fly cheap, flynino
-              </span>
-            </div>
-          </div>
-          <nav style={{ fontSize: 14, color: "#334155" }}>
-            <a href="#subscribe" style={{ textDecoration: "none", color: "#334155" }}>
-              S’abonner
-            </a>
-          </nav>
-        </div>
-      </header>
+<header style={{ borderBottom: "1px solid #e5e7eb", background: "#fff" }}>
+  <div
+    style={{
+      maxWidth: 960,
+      margin: "0 auto",
+      padding: "16px 20px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+    }}
+  >
+    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      {/* Logo agrandi */}
+      <img src="/logo.jpg" alt="Logo Flynino" width={70} height={70} style={{ borderRadius: 8 }} />
+      {/* Texte aligné verticalement */}
+      <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+        <span style={{ fontSize: 28, fontWeight: 900, letterSpacing: 0.5 }}>FLYNINO</span>
+        <span style={{ fontSize: 13, color: "#64748b", textTransform: "uppercase" }}>
+          fly cheap, flynino
+        </span>
+      </div>
+    </div>
+
+    {/* ✅ Un seul menu de navigation */}
+    <nav style={{ fontSize: 14, color: "#334155", display: "flex", gap: 16 }}>
+      <a href="/deals" style={{ textDecoration: "none", color: "#334155" }}>Aubaines</a>
+      <a href="#subscribe" style={{ textDecoration: "none", color: "#334155" }}>S’abonner</a>
+    </nav>
+  </div>
+</header>
 
       {/* HERO */}
       <section style={{ maxWidth: 960, margin: "0 auto", padding: "32px 20px 8px" }}>
