@@ -41,7 +41,7 @@ export default function Home() {
               <span style={{ fontSize: 22, fontWeight: 900, letterSpacing: 0.5 }}>FLYNINO</span>
               <span style={{ fontSize: 12, color: "#64748b", textTransform: "uppercase" }}>fly cheap, flynino</span>
             </div>
-            
+
           </div>
           <nav style={{ fontSize: 14, color: "#334155" }}>
             <a href="#subscribe" style={{ textDecoration: "none", color: "#334155" }}>S’abonner</a>
@@ -54,8 +54,11 @@ export default function Home() {
         <h1 style={{ fontSize: 36, lineHeight: 1.15, margin: 0 }}>
           Trouve des <span style={{ color: "#0ea5e9", fontWeight: 800 }}>aubaines de vols</span> sans effort
         </h1>
-        <p style={{ color: "#475569", marginTop: 10 }}>"fly cheap, flynino" — Alertes intelligentes pour les meilleures offres (Europe & Soleil).</p>
-      </section>
+       <p style={{ color: "#475569", marginTop: 10 }}>
+  &quot;fly cheap, flynino&quot; — Alertes intelligentes pour les meilleures offres (Europe & Soleil).
+</p>
+
+
 
       {/* FORM */}
       <section id="subscribe" style={{ maxWidth: 960, margin: "12px auto 40px", padding: "0 20px" }}>
