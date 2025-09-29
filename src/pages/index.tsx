@@ -1,10 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 
-const FORM_ENDPOINT = "https://formspree.io/f/xblzdjpl";
+const FORM_ENDPOINT = "https://formspree.io/f/xblzdjpl"; // ton endpoint formspree
 
 export default function Home() {
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
@@ -18,7 +16,11 @@ export default function Home() {
     data.append("_subject", "Nouvelle inscription aux alertes de prix — Flynino");
     data.append("_gotcha", "");
     try {
-      const r = await fetch(FORM_ENDPOINT, { method: "POST", headers: { Accept: "application/json" }, body: data });
+      const r = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: data,
+      });
       if (!r.ok) throw new Error(String(r.status));
       setStatus("ok");
       setMessage("Merci ! Vérifie ta boîte mail, ton inscription a bien été envoyée.");
@@ -33,61 +35,155 @@ export default function Home() {
     <>
       <Head>
         <title>Flynino — Aubaines de vols depuis Montréal</title>
-        <meta name="description" content="Alertes de prix et aubaines de vols (Europe & Soleil) — Flynino." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="Alertes de prix et aubaines de vols (Europe & Soleil) — Flynino."
+        />
       </Head>
 
-      <main className="page">
+      <main style={{ fontFamily: "system-ui, -apple-system", background: "#f8fafc", minHeight: "100vh" }}>
         {/* HEADER */}
-        <header className="header">
-          <div className="container header__inner">
-            <a className="brand" href="/">
-              <img className="brand__logo" src="/logo.jpg" alt="Logo Flynino" width={64} height={64} />
-              <div className="brand__text">
-                <span className="brand__title">FLYNINO</span>
-                <span className="brand__tagline">fly cheap, flynino</span>
+        <header style={{ borderBottom: "1px solid #e5e7eb", background: "#fff" }}>
+          <div
+            style={{
+              maxWidth: 960,
+              margin: "0 auto",
+              padding: "16px 20px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Link href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
+              <img
+                src="/logo.jpg"
+                alt="Logo Flynino"
+                width={64}
+                height={64}
+                style={{ borderRadius: 8, boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}
+              />
+              <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+                <span style={{ fontSize: 28, fontWeight: 900, letterSpacing: 0.5, color: "#0f172a" }}>
+                  FLYNINO
+                </span>
+                <span
+                  style={{
+                    fontSize: 13,
+                    color: "#64748b",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  fly cheap, flynino
+                </span>
               </div>
-            </a>
+            </Link>
 
-            <nav className="nav">
-              <Link href="/deals" className="nav__link nav__link--upper">AUBAINES</Link>
-              <a href="#subscribe" className="nav__link nav__link--upper">S’ABONNER</a>
+            <nav style={{ fontSize: 14, color: "#334155", display: "flex", gap: 16 }}>
+              <Link href="/deals" style={{ textDecoration: "none", color: "#334155", textTransform: "uppercase", fontWeight: 600 }}>
+                AUBAINES
+              </Link>
+              <a
+                href="#subscribe"
+                style={{
+                  textDecoration: "none",
+                  color: "#334155",
+                  textTransform: "uppercase",
+                  fontWeight: 600,
+                }}
+              >
+                S’ABONNER
+              </a>
             </nav>
           </div>
         </header>
 
         {/* HERO */}
-        <section className="hero">
-          <div className="container hero__inner">
-            <h1 className="hero__title">
-              Trouve des <span className="accent">aubaines de vols</span> sans effort
-            </h1>
-            <p className="hero__lead">
-              &quot;fly cheap, flynino&quot; — Alertes intelligentes pour les meilleures offres (Europe &amp; Soleil).
-            </p>
-            <div className="hero__cta">
-              <Link href="/deals" className="btn btn--primary">Voir les aubaines →</Link>
-              <a href="#subscribe" className="btn btn--ghost">S’abonner</a>
-            </div>
-          </div>
+        <section style={{ maxWidth: 960, margin: "0 auto", padding: "32px 20px 8px" }}>
+          <h1 style={{ fontSize: 36, lineHeight: 1.15, margin: 0 }}>
+            Trouve des{" "}
+            <span style={{ color: "#0ea5e9", fontWeight: 800 }}>aubaines de vols</span> sans effort
+          </h1>
+          <p style={{ color: "#475569", marginTop: 10 }}>
+            &quot;fly cheap, flynino&quot; — Alertes intelligentes pour les meilleures offres
+            (Europe &amp; Soleil).
+          </p>
         </section>
 
         {/* FORM */}
-        <section id="subscribe" className="container section">
-          <div className="card">
+        <section
+          id="subscribe"
+          style={{
+            maxWidth: 960,
+            margin: "12px auto 40px",
+            padding: "0 20px",
+          }}
+        >
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #e5e7eb",
+              borderRadius: 12,
+              padding: 16,
+              boxShadow: "0 6px 18px rgba(2,6,23,0.04)",
+            }}
+          >
             <form onSubmit={onSubmit}>
-              <label className="label">S’abonner aux alertes de prix</label>
-              <div className="grid">
-                <input name="email" type="email" required placeholder="votre@email.com" className="input" />
-                <div className="grid grid--2">
-                  <input name="origin" placeholder="Origine (ex. YUL)" className="input" />
-                  <input name="dest" placeholder="Destination (ex. CDG)" className="input" />
+              <label style={{ display: "block", fontWeight: 700, marginBottom: 8 }}>
+                S’abonner aux alertes de prix
+              </label>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 8 }}>
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="votre@email.com"
+                  style={{
+                    border: "1px solid #d1d5db",
+                    borderRadius: 8,
+                    padding: "10px 12px",
+                    background: "#fff",
+                  }}
+                />
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                  <input
+                    name="origin"
+                    placeholder="Origine (ex. YUL)"
+                    style={{
+                      border: "1px solid #d1d5db",
+                      borderRadius: 8,
+                      padding: "10px 12px",
+                      background: "#fff",
+                    }}
+                  />
+                  <input
+                    name="dest"
+                    placeholder="Destination (ex. CDG)"
+                    style={{
+                      border: "1px solid #d1d5db",
+                      borderRadius: 8,
+                      padding: "10px 12px",
+                      background: "#fff",
+                    }}
+                  />
                 </div>
-                <button type="submit" disabled={status === "sending"} className="btn btn--dark">
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  style={{
+                    background: "#0f172a",
+                    color: "white",
+                    border: "1px solid #0f172a",
+                    borderRadius: 8,
+                    padding: "10px 14px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    opacity: status === "sending" ? 0.7 : 1,
+                  }}
+                >
                   {status === "sending" ? "Envoi..." : "S’abonner"}
                 </button>
                 {status !== "idle" && (
-                  <small className={status === "ok" ? "msg ok" : "msg err"}>{message}</small>
+                  <small style={{ color: status === "ok" ? "#065f46" : "#7f1d1d" }}>{message}</small>
                 )}
               </div>
             </form>
@@ -95,72 +191,21 @@ export default function Home() {
         </section>
 
         {/* FOOTER */}
-        <footer className="footer">
-          <div className="container">
+        <footer style={{ borderTop: "1px solid #e5e7eb", background: "#fff" }}>
+          <div
+            style={{
+              maxWidth: 960,
+              margin: "0 auto",
+              padding: "14px 20px",
+              fontSize: 12,
+              color: "#64748b",
+              textAlign: "center",
+            }}
+          >
             © {new Date().getFullYear()} Flynino — fly cheap, flynino
           </div>
         </footer>
       </main>
-
-      {/* Styles */}
-      <style jsx global>{`
-        :root{
-          --ink:#0f172a; --muted:#64748b; --bdr:#e5e7eb; --bg:#f6f9fc; --accent:#0ea5e9;
-        }
-        *{box-sizing:border-box}
-        html,body{padding:0;margin:0}
-        body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-             color:var(--ink); background:var(--bg)}
-        .container{max-width:1060px;margin:0 auto;padding:0 20px}
-        .page{min-height:100vh;display:flex;flex-direction:column}
-
-        /* Header */
-        .header{background:#fff;border-bottom:1px solid var(--bdr);position:sticky;top:0;z-index:40}
-        .header__inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-        .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
-        .brand__logo{border-radius:10px;box-shadow:0 2px 8px rgba(2,6,23,.08)}
-        .brand__title{font-weight:900;letter-spacing:.5px;font-size:22px;color:var(--ink)}
-        .brand__tagline{font-size:12px;color:var(--muted);text-transform:uppercase}
-        .nav{display:flex;gap:18px}
-        .nav__link{color:#334155;text-decoration:none;padding:6px 0}
-        .nav__link:hover{color:var(--accent);text-decoration:underline}
-        .nav__link--upper{text-transform:uppercase;font-weight:600;letter-spacing:0.5px}
-
-        /* Hero */
-        .hero{background:linear-gradient(180deg, rgba(14,165,233,.06), transparent 60%);padding:46px 0 22px}
-        .hero__inner{display:grid;gap:12px}
-        .hero__title{font-size:40px;line-height:1.15;margin:0}
-        @media (max-width:640px){ .hero__title{font-size:32px} }
-        .accent{color:var(--accent);font-weight:800}
-        .hero__lead{color:#475569;margin:6px 0 10px}
-        .hero__cta{display:flex;gap:10px;flex-wrap:wrap}
-
-        /* Sections/Card/Form */
-        .section{padding:18px 0 40px}
-        .card{background:#fff;border:1px solid var(--bdr);border-radius:14px;box-shadow:0 8px 30px rgba(2,6,23,.06);padding:16px}
-        .label{font-weight:700;margin-bottom:8px;display:block}
-        .grid{display:grid;gap:10px}
-        .grid--2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-        @media (max-width:640px){.grid--2{grid-template-columns:1fr}}
-        .input{border:1px solid #d1d5db;border-radius:10px;padding:12px;background:#fff;width:100%}
-
-        /* Buttons */
-        .btn{display:inline-block;border-radius:10px;padding:10px 14px;font-weight:700;text-decoration:none;transition:all .15s ease}
-        .btn--primary{background:var(--accent);color:#fff}
-        .btn--primary:hover{filter:brightness(.95);transform:translateY(-1px)}
-        .btn--ghost{background:transparent;color:var(--ink);border:1px solid var(--bdr)}
-        .btn--ghost:hover{border-color:var(--ink)}
-        .btn--dark{background:var(--ink);color:#fff;border:1px solid var(--ink)}
-        .btn--dark:hover{filter:brightness(.95)}
-
-        /* Footer */
-        .footer{border-top:1px solid var(--bdr);background:#fff;margin-top:auto}
-        .footer .container{padding:14px 20px;color:var(--muted);font-size:12px}
-
-        .msg{font-size:13px}
-        .msg.ok{color:#065f46}
-        .msg.err{color:#7f1d1d}
-      `}</style>
     </>
   );
 }

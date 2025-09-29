@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useMemo, useState } from "react";
 
 type Deal = { id:string; city:string; iata:string; month:number; price:number; link:string; };
@@ -21,7 +20,7 @@ export default function DealsPage() {
   );
 
   return (
-    <main className="deals">
+    <main className="page">
       <div className="container">
         <h1 className="title">Aubaines au départ de Montréal</h1>
 
@@ -32,7 +31,7 @@ export default function DealsPage() {
               const num = i + 1, active = activeMonth === num;
               return (
                 <button key={m} onClick={() => setActiveMonth(active ? null : num)}
-                  className={`chip ${active ? "chip--on" : ""}`}>{m}</button>
+                        className={`chip ${active ? "chip--on" : ""}`}>{m}</button>
               );
             })}
           </div>
@@ -50,13 +49,16 @@ export default function DealsPage() {
         <section className="grid">
           {data.map(d => (
             <a key={d.id} href={d.link} className="card">
-              <div className="card__head">
+              <div className="card__top">
                 <strong className="card__city">{d.city}</strong>
                 <span className="pill">{months[d.month-1]}</span>
               </div>
               <div className="muted">YUL → {d.iata}</div>
-              <div className="card__price">{Math.round(d.price)} $</div>
-              <div className="card__cta">Voir le deal →</div>
+              <div className="divider" />
+              <div className="card__bottom">
+                <div className="price">{Math.round(d.price)} $</div>
+                <div className="cta">Voir le deal →</div>
+              </div>
             </a>
           ))}
           {data.length === 0 && <div className="muted">Aucune aubaine pour ces filtres.</div>}
@@ -65,24 +67,27 @@ export default function DealsPage() {
 
       <style jsx>{`
         :root{ --ink:#0f172a; --muted:#64748b; --bdr:#e5e7eb; --accent:#0ea5e9; }
-        .deals{ font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
+        .page{ font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
         .title{ font-size:32px; font-weight:800; margin:28px 0 10px }
-        .filters{ display:grid; gap:12px; margin:6px 0 18px }
+        .filters{ display:grid; gap:12px; margin:8px 0 18px }
         .months{ display:flex; flex-wrap:wrap; gap:8px }
         .chip{ padding:6px 10px; border:1px solid var(--bdr); border-radius:999px; background:#fff; cursor:pointer }
         .chip--on{ background:var(--accent); color:#fff; border-color:var(--accent) }
         .label{ display:block; font-weight:600; margin-bottom:6px }
         .ranges{ display:flex; gap:12px; align-items:center }
-        .grid{ display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); padding-bottom:28px }
-        .card{ border:1px solid var(--bdr); border-radius:14px; padding:14px; text-decoration:none; color:var(--ink);
+
+        .grid{ display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); padding-bottom:28px }
+        .card{ border:1px solid var(--bdr); border-radius:16px; padding:14px; text-decoration:none; color:var(--ink);
                background:#fff; box-shadow:0 8px 30px rgba(2,6,23,.05); transition:transform .12s ease, box-shadow .12s ease }
         .card:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(2,6,23,.08) }
-        .card__head{ display:flex; justify-content:space-between; align-items:center }
+        .card__top{ display:flex; justify-content:space-between; align-items:center }
         .card__city{ font-size:18px }
         .pill{ font-size:12px; border:1px solid var(--bdr); border-radius:999px; padding:2px 8px; color:#111827 }
         .muted{ color:var(--muted); font-size:13px; margin-top:4px }
-        .card__price{ font-weight:800; font-size:24px; margin-top:8px }
-        .card__cta{ margin-top:8px; font-size:14px; color:var(--accent) }
+        .divider{ height:1px; background:var(--bdr); margin:10px 0 }
+        .card__bottom{ display:flex; align-items:center; justify-content:space-between }
+        .price{ font-weight:800; font-size:24px }
+        .cta{ font-size:14px; color:var(--accent) }
       `}</style>
     </main>
   );
