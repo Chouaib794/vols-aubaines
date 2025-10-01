@@ -1,94 +1,45 @@
-import React, { useMemo, useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
-type Deal = { id:string; city:string; iata:string; month:number; price:number; link:string; };
-const MOCK: Deal[] = [
-  { id:"1", city:"Lisbonne",   iata:"LIS", month:11, price:553, link:"#"},
-  { id:"2", city:"Las Vegas",  iata:"LAS", month: 1, price:281, link:"#"},
-  { id:"3", city:"Paris",      iata:"CDG", month: 3, price:499, link:"#"},
-  { id:"4", city:"Casablanca", iata:"CMN", month: 2, price:620, link:"#"},
-];
-const months = ["Jan","Fév","Mar","Avr","Mai","Juin","Juil","Août","Sept","Oct","Nov","Déc"];
+function gfDate(d?: string | string[]) {
+  if (!d || typeof d !== "string") return "";
+  // YYYY-MM-DD -> YYMMDD (Google Flights q param accepte 240930)
+  return d.replace(/^(\d{2})\d{2}-(\d{2})-(\d{2})$/, "$1$2$3");
+}
 
-export default function DealsPage() {
-  const [minPrice, setMinPrice] = useState(150);
-  const [maxPrice, setMaxPrice] = useState(1100);
-  const [activeMonth, setActiveMonth] = useState<number | null>(null);
+export default function Deals() {
+  const { query } = useRouter();
+  const { o, d, depart, trip, adults, cabin, return: ret } = query;
 
-  const data = useMemo(
-    () => MOCK.filter(d => d.price >= minPrice && d.price <= maxPrice && (activeMonth ? d.month === activeMonth : true)),
-    [minPrice, maxPrice, activeMonth]
-  );
+  // Construit un lien Google Flights pratique pour valider les paramètres
+  const pax = Number(adults || 1);
+  const cabins: Record<string, string> = { economy: "e", premium: "p", business: "b", first: "f" };
+  const c = cabins[String(cabin || "economy")] ?? "e";
+  const dep = gfDate(depart);
+  const r = gfDate(ret);
+
+  const base = "https://www.google.com/travel/flights";
+  const gfl =
+    trip === "oneway" || !r
+      ? `${base}?q=${o}-${d}%20${dep};tt=o;px=${pax};c=${c}`
+      : `${base}?q=${o}-${d}%20${dep}%20${r};tt=r;px=${pax};c=${c}`;
 
   return (
-    <main className="page">
-      <div className="container">
-        <h1 className="title">Aubaines au départ de Montréal</h1>
+    <main style={{ maxWidth: 760, margin: "40px auto", padding: 16, fontFamily: "system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" }}>
+      <Link href="/" style={{ textDecoration: "none", color: "#0ea5e9" }}>← Retour</Link>
+      <h1 style={{ marginTop: 12 }}>Deals (demo)</h1>
 
-        {/* Filtres */}
-        <section className="filters">
-          <div className="months">
-            {months.map((m, i) => {
-              const num = i + 1, active = activeMonth === num;
-              return (
-                <button key={m} onClick={() => setActiveMonth(active ? null : num)}
-                        className={`chip ${active ? "chip--on" : ""}`}>{m}</button>
-              );
-            })}
-          </div>
+      <p>Paramètres reçus :</p>
+      <pre style={{ background: "#f7fafc", padding: 12, borderRadius: 8, border: "1px solid #e5e7eb", overflowX: "auto" }}>
+{JSON.stringify({ o, d, depart, trip, adults, cabin, return: ret }, null, 2)}
+      </pre>
 
-          <div>
-            <label className="label">Prix : {minPrice}$ – {maxPrice}$</label>
-            <div className="ranges">
-              <input type="range" min={100} max={1500} value={minPrice} onChange={e=>setMinPrice(Number(e.target.value))}/>
-              <input type="range" min={100} max={1500} value={maxPrice} onChange={e=>setMaxPrice(Number(e.target.value))}/>
-            </div>
-          </div>
-        </section>
-
-        {/* Liste */}
-        <section className="grid">
-          {data.map(d => (
-            <a key={d.id} href={d.link} className="card">
-              <div className="card__top">
-                <strong className="card__city">{d.city}</strong>
-                <span className="pill">{months[d.month-1]}</span>
-              </div>
-              <div className="muted">YUL → {d.iata}</div>
-              <div className="divider" />
-              <div className="card__bottom">
-                <div className="price">{Math.round(d.price)} $</div>
-                <div className="cta">Voir le deal →</div>
-              </div>
-            </a>
-          ))}
-          {data.length === 0 && <div className="muted">Aucune aubaine pour ces filtres.</div>}
-        </section>
-      </div>
-
-      <style jsx>{`
-        :root{ --ink:#0f172a; --muted:#64748b; --bdr:#e5e7eb; --accent:#0ea5e9; }
-        .page{ font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
-        .title{ font-size:32px; font-weight:800; margin:28px 0 10px }
-        .filters{ display:grid; gap:12px; margin:8px 0 18px }
-        .months{ display:flex; flex-wrap:wrap; gap:8px }
-        .chip{ padding:6px 10px; border:1px solid var(--bdr); border-radius:999px; background:#fff; cursor:pointer }
-        .chip--on{ background:var(--accent); color:#fff; border-color:var(--accent) }
-        .label{ display:block; font-weight:600; margin-bottom:6px }
-        .ranges{ display:flex; gap:12px; align-items:center }
-
-        .grid{ display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); padding-bottom:28px }
-        .card{ border:1px solid var(--bdr); border-radius:16px; padding:14px; text-decoration:none; color:var(--ink);
-               background:#fff; box-shadow:0 8px 30px rgba(2,6,23,.05); transition:transform .12s ease, box-shadow .12s ease }
-        .card:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(2,6,23,.08) }
-        .card__top{ display:flex; justify-content:space-between; align-items:center }
-        .card__city{ font-size:18px }
-        .pill{ font-size:12px; border:1px solid var(--bdr); border-radius:999px; padding:2px 8px; color:#111827 }
-        .muted{ color:var(--muted); font-size:13px; margin-top:4px }
-        .divider{ height:1px; background:var(--bdr); margin:10px 0 }
-        .card__bottom{ display:flex; align-items:center; justify-content:space-between }
-        .price{ font-weight:800; font-size:24px }
-        .cta{ font-size:14px; color:var(--accent) }
-      `}</style>
+      <p style={{ marginTop: 16 }}>
+        <a href={gfl} target="_blank" rel="noreferrer"
+           style={{ padding: "10px 14px", borderRadius: 10, background: "#0ea5e9", color: "#fff", textDecoration: "none", fontWeight: 700 }}>
+          Ouvrir cette recherche dans Google Flights
+        </a>
+      </p>
     </main>
   );
 }
