@@ -1,0 +1,14 @@
+{
+  "title": "Trouve des aubaines de vols",
+  "subtitle": "Alertes intelligentes pour les meilleures offres",
+  "subscribe": "S’abonner aux alertes de prix",
+
+  "invalid_email": "Adresse e-mail invalide.",
+  "fix_fields": "Merci de corriger les champs en rouge.",
+  "success": "Merci ! Vérifie ta boîte mail, ton inscription a bien été envoyée.",
+  "retry": "Oups, envoi impossible. Réessaie dans un instant.",
+
+  "invalid_iata": "Utilise des codes IATA (ex. YUL, CDG).",
+  "missing_depart": "Ajoute une date de départ.",
+  "missing_return": "Ajoute une date de retour ou passe en aller simple."
+}

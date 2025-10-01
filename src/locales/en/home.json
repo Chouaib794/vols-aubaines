@@ -1,0 +1,14 @@
+{
+  "title": "Find flight deals",
+  "subtitle": "Smart alerts for the best offers",
+  "subscribe": "Subscribe to price alerts",
+
+  "invalid_email": "Invalid email address.",
+  "fix_fields": "Please fix the highlighted fields.",
+  "success": "Thanks! Check your inbox — your subscription was sent.",
+  "retry": "Oops, couldn’t send. Please try again shortly.",
+
+  "invalid_iata": "Use IATA codes (e.g., YUL, CDG).",
+  "missing_depart": "Please add a departure date.",
+  "missing_return": "Add a return date or switch to one way."
+}

@@ -3,9 +3,13 @@ import Link from "next/link";
 
 function gfDate(d?: string | string[]) {
   if (!d || typeof d !== "string") return "";
-  // YYYY-MM-DD -> YYMMDD (Google Flights q param accepte 240930)
-  return d.replace(/^(\d{2})\d{2}-(\d{2})-(\d{2})$/, "$1$2$3");
+  // YYYY-MM-DD -> YYMMDD  (ex: 2028-07-01 => 280701)
+  const m = d.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!m) return "";
+  const [, y, mo, da] = m;
+  return y.slice(2) + mo + da;
 }
+
 
 export default function Deals() {
   const { query } = useRouter();
